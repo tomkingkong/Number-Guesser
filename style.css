@@ -1,0 +1,140 @@
+.box {
+  background-color: lightgrey;
+  width: 200px;
+  height: 200px;
+}
+
+.myClass {
+  width: 200px;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+form {
+  text-align: center;
+  margin: 30px auto;
+  max-width: 300px;
+}
+
+/*remove arrow scroll bar from textbox  */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin:0;
+}
+
+header {
+  background-color: #404041;
+  width: 100%;
+  height: auto;
+  max-height: 100px;
+  padding: 0;
+  text-align: center;
+}
+h1 {
+  margin: 0;
+  color: #EB008B;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: lighter;
+  font-size: 8em;
+}
+
+h2 {
+  color: #E6E7E8;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  font-weight: lighter;
+  font-size: 2.4em;
+  padding: 10px 0;
+  margin: auto;
+}
+
+p {
+  display: inline-block;
+  color: #404041;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 auto;
+}
+
+button {
+  background-color: #929497;
+  color: #fff;
+  width: 100px;
+  border-radius: 50px 50px;
+  font-family: 'Open Sans', sans-serif;
+  margin: 10px 0;
+}
+
+button:disabled {
+  background-color: #D0D2D3;
+  color: #fff;
+}
+
+button:hover {
+  background-color: #EB008B;
+  color: #fff;
+}
+
+button:disabled:hover {
+  background-color: #D0D2D3;
+  color: #fff;
+}
+
+.range {
+  margin: 10px 0;
+  text-align: center;
+  width: 30px;
+}
+
+input {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 auto;
+  max-width: 300px;
+  width: 100%;
+ 
+}
+#userinput {
+  height: 28px;
+}
+
+::placeholder {
+  color: #D0D2D3;
+  font-weight: lighter;
+  font-family: Helvetica, sans-serif;
+  padding: 5px;
+  font-size: 1.5em;
+}
+
+#submit {
+  font-size: 1em;
+  float: left;
+  width: 140px;
+}
+
+#clear {
+  font-size: 1em;
+  float: right;
+  width: 140px;
+}
+
+#reset {
+  width: 300px;
+  font-size: .8em;
+}
+
+span {
+  color: #EB008B;
+}

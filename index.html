@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>Number Guesser</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <audio id="correct">
+      <source src="bazinga.swf.mp3" type="audio/mpeg">
+    </audio>
+<header><h2><span><strong>Number</strong></span> Guesser</h2></header>
+  <form>
+    <label for="userinput"></label>
+    <input id="userinput" autocomplete="off" onfocus="select()" onkeypress="return NaNFool()" type="number" placeholder="Enter your guess"><br />
+    <label for="minInput"><p>Min</p></label>
+    <input id="minInput" class="range"  autocomplete="off" onfocus="select()" type="number" placeholder="Min" value="0"> -
+    <input id="maxInput" class="range" autocomplete="off" onfocus="select()" type="number" placeholder="Max" value="100">
+    <label for="maxInput"><p>Max</p></label>
+    <br />
+    <button id="submit" type="submit" disabled="true">Guess</button>
+    <button id="clear" type="button" disabled="true">Clear</button><br />
+    <p id="lastguess"></p><br />
+    <h1></h1>
+    <p id="result"></p>
+    <button type="reset" value="Reset" id="reset" disabled="true">Reset</button>
+  </form>
+
+  <!-- <div class="box"></div>
+<input class="text-input" onfocus="select()" type="text" placeholder="Text">
+<button class="change-text">Change Text</button>
+
+<input class="property" onfocus="select()" type="text" placeholder="Property"> 
+<input class="value" onfocus="select()" type="text" placeholder="Value">
+<button class="do-it">Do It!</button> -->
+
+  <script src="script.js"></script>
+  </div>
+</body>
+</html>
