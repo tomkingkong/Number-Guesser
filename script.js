@@ -24,6 +24,28 @@ var bazinga = document.getElementById('correct');
 //Declare Button array
 var buttons = document.querySelectorAll('button');
 
+//Declare Minimum Input
+var minIn = document.getElementById('minInput');
+
+//Declare Maximum Input
+var maxIn = document.getElementById('maxInput');
+
+//Declare P tag - Too Low, High, or Boom! text
+var isItCorrect = document.getElementById('result');
+
+//Declare P tag Out of Range text
+var outOfRange = document.getElementById('OOR');
+
+//Declare Range Inputs
+var theRange = document.getElementsByClassName('range');
+
+//Declare Custom Game Button
+var customRangeBtn = document.getElementById('custom');
+
+//Generate random number
+var answer = getRandomIntInclusive();
+
+
 /*.............................................*/
 
 
@@ -41,11 +63,11 @@ clearBtn.addEventListener('click', clearMe);
 //Check Reset Button for Click -> Reload Page
 resetBtn.addEventListener('click', newGame);
 
-//Create Answer on page load
-document.addEventListener('load', answer);
+//Check if Custom Game Button is clicked, update Answer with new Range
+customRangeBtn.addEventListener('click', getRandomIntInclusive);
 
-//Generate random number
-var answer = Math.floor(Math.random() * 100 + 1);
+//Create Answer on page load
+document.addEventListener('load', getRandomIntInclusive);
 
 //Check Submit Button Clicked
 //Display Guess high/low/win
@@ -58,9 +80,26 @@ updateGuess.addEventListener('click', displayLastGuess);
 //Check if Return/Enter keypress -> add guess value to h1
 guess.addEventListener('keyup', enterReturn);
 
+//Check if User Input is out of Range of Min/Max
+guess.addEventListener('input', isOutOfRange);
+
 /*.............................................*/
 
 //  FUNCTIONS
+
+//Display Guess high/low/win
+function displayGuess() {
+  event.preventDefault();
+      compareGuess();
+      yourGuess.innerText = guess.value;
+};
+
+//Enter/Return pressed -> display guess
+function enterReturn(event) {
+  if (event.keyCode === 13 && displayLastGuess() == true) {
+    displayGuess();
+  }
+};
 
 //Enable Clear/Reset Buttons
 function enableButtons() {
@@ -68,6 +107,25 @@ function enableButtons() {
     for(var i = 0; i < buttons.length; i++){
       buttons[i].disabled = false;
     }
+  };
+};
+
+//Start Next Game After Win
+function startNextGame() {
+  if (isItCorrect.innerText === 'BOOM!') {
+    setTimeout(function(){
+      clearMe();
+
+    }, 2000);
+  };
+};
+
+//Enable Custom Game
+function enableCustomGame() {
+  if (console.count(win) * 5 === true){
+    customRangeBtn.hidden = false;
+    minIn.disabled = false;
+    maxIn.disabled = false;
   };
 };
 
@@ -91,29 +149,22 @@ function newGame() {
   location.reload();
 };
 
-//Display Guess high/low/win
-function displayGuess() {
-  event.preventDefault();
-  yourGuess.innerText = guess.value;
-  compareGuess();
-};
-
 //Play bazinga audio file
 function playAudioWin() {
   bazinga.play();
 };
 
+//Return Random Number Between Min and Max Values
+function getRandomIntInclusive() {
+  max = Math.floor(maxIn.value);
+  min = Math.ceil(minIn.value);
+  answer = Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
 
-var minIn = document.getElementById('minInput');
-var maxIn = document.getElementById('maxInput');
+  console.log(answer); //REMOVE
 
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
-}
+  return answer;
+};
 
-guess.addEventListener('input', isOutOfRange)
 //Compare guess to min max values
 //Prevent Num out of Min/Max Range
 function isOutOfRange() {
@@ -121,31 +172,31 @@ function isOutOfRange() {
   var max = parseInt(maxIn.value);
   var guessNum = parseInt(guess.value);
   if (guessNum < min) {
-    lastGuess.innerText = 'Below Minimun';
-    updateGuess.disabled = true; //diable guess button
+    outOfRange.innerText = 'Below Minimun';
+    updateGuess.disabled = true;
+    return false;
   } else if (guessNum > max) {
-    lastGuess.innerText = 'Above Maximum';
-    updateGuess.disabled = true; //diable guess button
+    outOfRange.innerText = 'Above Maximum';
+    updateGuess.disabled = true;
+    return false;
   } else {
-    clearLastGuess();
+    outOfRange.innerText = '';
+    return true;
   };
 };
 
-//Clear Last Guess if within range
-function clearLastGuess() {
-  lastGuess.innerText = '';
-};
 //Compare guess to answer, print results
 function compareGuess() {
-var state = document.getElementById('result');
 var guessNum = parseInt(guess.value);
 if (guessNum === answer) {
   playAudioWin(); //play bazinga audio on win
-  state.innerText = 'BOOM!'; //display Boom! on win
+  isItCorrect.innerText = 'BOOM!';//display Boom! on win
 } else if (guessNum < answer) { //display too low
-  state.innerText = 'That is too low';
+  isItCorrect.innerText = 'That is too low';
+  console.log('too low');
 } else { //display too high
-  state.innerText = 'That is too high';
+  isItCorrect.innerText = 'That is too high';
+  console.log('too high?');
 };
 console.log(guessNum);
 console.log(answer);
@@ -153,7 +204,14 @@ console.log(answer);
 
 //Display Last Guess Text
 function displayLastGuess() {
-  lastGuess.innerText = 'Your Last Guess Was';
+  var min = parseInt(minIn.value);
+  var max = parseInt(maxIn.value);
+  var guessNum = parseInt(guess.value);
+  if (guessNum > min && guessNum < max){
+    lastGuess.innerText = 'Your last guess was';
+    return true;
+  }
+  
 };
 
 //Display "Not a Number" if NaN received
@@ -161,15 +219,10 @@ function NaNFool() {
   var x = (x) ? x : window.event; //who's daddy do i belong to?
   var charCode = (x.which) ? x.which : x.keyCode; //is this IE or everyone else?
   if (charCode > 31 && (charCode < 48 || charCode > 57)) { //plz, no characters but 0-9 (48-57)
-    lastGuess.innerText = "This is not a number fool!";
+    outOfRange.innerText = "This is not a number fool!";
+  } else {
+    outOfRange.innerText = "";
   };
-};
-
-//Enter/Return pressed -> display guess
-function enterReturn(event) {
-  if (event.keyCode === 13) {
-    displayGuess();
-  }
 };
 
 
@@ -182,24 +235,23 @@ function enterReturn(event) {
 
 // //-----------------------------------------------
 // var box = document.querySelector('.box');
-//     text = document.querySelector('.text-input');
-//     changeText = document.querySelector('.change-text');
+// var text = document.querySelector('.text-input');
+// var changeText = document.querySelector('.change-text');
     
 // changeText.addEventListener('click', function () {
 //   box.innerText = text.value;
 // });
 
 // var prop = document.querySelector('.property');
-//     val = document.querySelector('.value');
-//     doIt = document.querySelector('.do-it');
-//     combo = prop.value + " = " + '"' + val.value + '";';
-// doIt.addEventListener('click', function() {
-//   // combo = prop.value + ":" + val.value;
-//   // att = document.createAttribute("style");
-//   // att.value = combo;
-//   // box.setAttributeNode(att);
+// var val = document.querySelector('.value');
+// var doIt = document.querySelector('.do-it');
+
+// //Click to Add Styles
+// doIt.addEventListener('click', addStyles);
+
+// function addStyles() {
 //   box.style[prop.value] = [val.value]; //replace .style.property with the entered property and replace the =value with entered value
-// });
+// };
 
 // document.addEventListener('keydown', function(event) {
 //   var x = event.which || event.keyCode; // event.keyCode is used for IE8 and earlier
