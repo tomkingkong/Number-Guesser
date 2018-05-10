@@ -20,15 +20,15 @@
   </form><br />
   <form id="minMax" style="display: none">
     <button id="custom" type="button">Custom Game</button>
-    <label for="minInput"> <p>Min</p></label>
+    <label for="minInput"> <p class="winning">Min</p></label>
     <input id="minInput" class="range"  autocomplete="off" onfocus="select()" type="number" placeholder="min"  onkeypress="return NaNFool()"  value="0"> - 
     <input id="maxInput" class="range" autocomplete="off" onfocus="select()" type="number" placeholder="max" onkeypress="return NaNFool()"  value="100">
-    <label for="maxInput" ><p>Max</p></label>
+    <label for="maxInput" ><p class="winning">Max</p></label>
   </form>
     
-    <p id="lastguess"></p>
+    <p id="lastguess" class="winning"></p>
     <h1>Play Me</h1>
-    <p id="result"></p><br />
+    <p id="result" class="winning"></p><br />
     <button type="reset" value="Reset" id="reset" disabled="true">Reset</button>
 </main>
 

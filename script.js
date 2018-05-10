@@ -54,6 +54,8 @@ var minMax = document.getElementById('minMaxForm');
 //Declare Min/Max Form
 var minMaxForm = document.getElementById('minMax');
 
+var winners = document.querySelectorAll('.winning');
+
 //Declare Win Counter
 var winCount = 0;
 
@@ -127,7 +129,6 @@ function enableButtons() {
   };
 };
 
-
 //Start Next Game After Win
 function startNextGame() {
     setTimeout(function(){
@@ -156,6 +157,9 @@ function enableCustomGame() {
     unhideMinMaxForm();
     superGuesser.classList.add("font-effect-fire-animation");
     mainBody.classList.add('badass');
+    for(var i = 0; i < winners.length; i++){
+      winners[i].style.color = "#fff";
+    }
   };
 };
 
