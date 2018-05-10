@@ -48,6 +48,16 @@ var answer = getRandomIntInclusive();
 //Start off Placeholder text with standard Min/Max
 guess.placeholder='Guess a number between ' + minIn.value + ' and ' + maxIn.value;
 
+//Declare Min/Max Form
+var minMax = document.getElementById('minMaxForm');
+
+//Declare Min/Max Form
+var minMaxForm = document.getElementById('minMax');
+
+//Declare Win Counter
+var winCount = 0;
+
+
 /*.............................................*/
 
 
@@ -70,7 +80,7 @@ resetBtn.addEventListener('click', newGame);
 customRangeBtn.addEventListener('click', getRandomIntInclusive);
 
 //Create Answer on page load
-document.addEventListener('load', getRandomIntInclusive);
+// document.addEventListener('load', getRandomIntInclusive);
 
 //Check Submit Button Clicked
 //Display Guess high/low/win
@@ -117,23 +127,37 @@ function enableButtons() {
   };
 };
 
+
 //Start Next Game After Win
 function startNextGame() {
     setTimeout(function(){
-      clearMe();
-      maxIn.value + 10;
-      minIn.value - 10;
+      refreshNewGame();
+      maxIn.value = parseInt(maxIn.value) + 10;
+      minIn.value = parseInt(minIn.value) - 10;
       getRandomIntInclusive();
+      updatePlaceholder();
+      enableCustomGame();
     }, 2000);
+};
+
+//Refresh no reload
+function refreshNewGame() {
+  clearMe();
+  yourGuess.innerText = "New Game"
+  lastGuess.innerText = "";
+  isItCorrect.innerText = 'Here we go!';
 };
 
 //Enable Custom Game
 function enableCustomGame() {
-  if (console.count(win) * 5 === true){
-    customRangeBtn.hidden = false;
-    minIn.disabled = false;
-    maxIn.disabled = false;
+  if (winCount > 2){
+    unhideMinMaxForm();
   };
+};
+
+//Unhide Custom Game
+function unhideMinMaxForm() {
+  minMaxForm.style.display = 'block';
 };
 
 //Disable the Clear/Guess Buttons
@@ -156,6 +180,7 @@ function newGame() {
   location.reload();
 };
 
+
 //Play bazinga audio file
 function playAudioWin() {
   bazinga.play();
@@ -163,13 +188,12 @@ function playAudioWin() {
 
 //Return Random Number Between Min and Max Values
 function getRandomIntInclusive() {
-  max = Math.floor(maxIn.value);
-  min = Math.ceil(minIn.value);
+  var max = Math.floor(maxIn.value);
+  var min = Math.ceil(minIn.value);
   answer = Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
-
   console.log(answer); //REMOVE
-
   return answer;
+  
 };
 
 //Compare guess to min max values
@@ -197,13 +221,15 @@ function compareGuess() {
 var guessNum = parseInt(guess.value);
 if (guessNum === answer) {
   playAudioWin(); //play bazinga audio on win
-  isItCorrect.innerText = 'BOOM!';//display Boom! on win
-} else if (guessNum < answer) { //display too low
-  isItCorrect.innerText = 'That is too low';
-  console.log('too low');
-} else { //display too high
-  isItCorrect.innerText = 'That is too high';
-  console.log('too high?');
+  isItCorrect.innerText = 'BOOM!'; //display Boom! on win
+  winCount++;
+  startNextGame();
+} else if (guessNum < answer) { 
+  isItCorrect.innerText = 'That is too low'; //display too low
+  console.log('too low'); //REMOVE
+} else { 
+  isItCorrect.innerText = 'That is too high'; //display too high
+  console.log('too high?');//REMOVE
 };
 };
 
@@ -215,8 +241,7 @@ function displayLastGuess() {
   if (guessNum > min && guessNum < max){
     lastGuess.innerText = 'Your last guess was';
     return true;
-  }
-  
+  };
 };
 
 //Display "Not a Number" if NaN received
@@ -232,7 +257,7 @@ function NaNFool() {
 
 //Update the Placeholder InputText to show Min/Max values
 function updatePlaceholder() {
-  guess.placeholder='Guess a number between ' + minIn.value + ' and ' + maxIn.value;
+      guess.placeholder='Guess a number between ' + minIn.value + ' and ' + maxIn.value;
 };
 
 

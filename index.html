@@ -17,16 +17,16 @@
     <button id="submit" type="submit" disabled="true">Guess</button>
     <button id="clear" type="button" disabled="true">Clear</button>
   </form><br />
-    <form>
-    <button id="custom" type="button"  >Custom Game</button>
-    <label for="minInput"><p class="minmax">Min</p></label>
-    <input id="minInput" class="range"  autocomplete="off" onfocus="select()" type="number" placeholder="min"  onkeypress="return NaNFool()"  value="0"> -
+  <form id="minMax" style="display: none">
+    <button id="custom" type="button">Custom Game</button>
+    <label for="minInput"> <p>Min</p></label>
+    <input id="minInput" class="range"  autocomplete="off" onfocus="select()" type="number" placeholder="min"  onkeypress="return NaNFool()"  value="0"> - 
     <input id="maxInput" class="range" autocomplete="off" onfocus="select()" type="number" placeholder="max" onkeypress="return NaNFool()"  value="100">
-    <label for="maxInput"><p class="minmax">Max</p></label>
+    <label for="maxInput" ><p>Max</p></label>
   </form>
     
     <p id="lastguess"></p>
-    <h1>?</h1>
+    <h1>Play Me</h1>
     <p id="result"></p><br />
     <button type="reset" value="Reset" id="reset" disabled="true">Reset</button>
 
