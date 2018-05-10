@@ -1,67 +1,66 @@
 //  VARIABLE DECLARATIONS
 
 //Declare Clear Button
-var clearBtn = document.getElementById('clear');
+var clearBtn = document.getElementById("clear");
 
 //Declare Guess Input
-var  guess = document.getElementById('userinput');
+var guess = document.getElementById("userinput");
 
 //Declare Submit Guess Button
-var  updateGuess = document.getElementById('submit');
+var updateGuess = document.getElementById("submit");
 
 //Declare Guess Number Display
-var  yourGuess = document.querySelector('h1');
+var yourGuess = document.querySelector("h1");
 
 //Declare Your Last Guess Display
-var lastGuess = document.getElementById('lastguess');
+var lastGuess = document.getElementById("lastguess");
 
 //Declare Reset Button
-var resetBtn = document.getElementById('reset');
+var resetBtn = document.getElementById("reset");
 
 //Declare bazinga audio element
-var bazinga = document.getElementById('correct');
+var bazinga = document.getElementById("correct");
 
 //Declare Button array
-var buttons = document.querySelectorAll('button');
+var buttons = document.querySelectorAll("button");
 
 //Declare Minimum Input
-var minIn = document.getElementById('minInput');
+var minIn = document.getElementById("minInput");
 
 //Declare Maximum Input
-var maxIn = document.getElementById('maxInput');
+var maxIn = document.getElementById("maxInput");
 
 //Declare P tag - Too Low, High, or Boom! text
-var isItCorrect = document.getElementById('result');
+var isItCorrect = document.getElementById("result");
 
 //Declare P tag Out of Range text
-var outOfRange = document.getElementById('OOR');
+var outOfRange = document.getElementById("OOR");
 
 //Declare Range Inputs
-var theRange = document.getElementsByClassName('.range');
+var theRange = document.getElementsByClassName(".range");
 
 //Declare Custom Game Button
-var customRangeBtn = document.getElementById('custom');
+var customRangeBtn = document.getElementById("custom");
 
 //Generate random number
 var answer = getRandomIntInclusive();
 
 //Start off Placeholder text with standard Min/Max
-guess.placeholder='Guess a number between ' + minIn.value + ' and ' + maxIn.value;
+guess.placeholder =
+  "Guess a number between " + minIn.value + " and " + maxIn.value;
 
 //Declare Min/Max Form
-var minMax = document.getElementById('minMaxForm');
+var minMax = document.getElementById("minMaxForm");
 
 //Declare Min/Max Form
-var minMaxForm = document.getElementById('minMax');
+var minMaxForm = document.getElementById("minMax");
 
-var winners = document.querySelectorAll('.winning');
+var winners = document.querySelectorAll(".winning");
 
 //Declare Win Counter
 var winCount = 0;
 
-
 /*.............................................*/
-
 
 //  EVENT LISTENERS
 
@@ -73,34 +72,34 @@ guess.addEventListener("input", disableClearGuessBtns);
 
 //Check for Clear Button click
 //Clear Guess Textbox and Disable Clear Button
-clearBtn.addEventListener('click', clearMe);
+clearBtn.addEventListener("click", clearMe);
 
 //Check Reset Button for Click -> Reload Page
-resetBtn.addEventListener('click', newGame);
+resetBtn.addEventListener("click", newGame);
 
 //Check if Custom Game Button is clicked, update Answer with new Range
-customRangeBtn.addEventListener('click', getRandomIntInclusive);
+customRangeBtn.addEventListener("click", getRandomIntInclusive);
 
 //Create Answer on page load
 // document.addEventListener('load', getRandomIntInclusive);
 
 //Check Submit Button Clicked
 //Display Guess high/low/win
-updateGuess.addEventListener('click', displayGuess);
+updateGuess.addEventListener("click", displayGuess);
 
 //Check Submit Button Clicked
 //Display Last Guess Text
-updateGuess.addEventListener('click', displayLastGuess);
+updateGuess.addEventListener("click", displayLastGuess);
 
 //Check if Return/Enter keypress -> add guess value to h1
-guess.addEventListener('keyup', enterReturn);
+// guess.addEventListener('keyup', enterReturn);
 
 //Check if User Input is out of Range of Min/Max
-guess.addEventListener('input', isOutOfRange);
+guess.addEventListener("input", isOutOfRange);
 
 //On input describe placeholder text
-minIn.addEventListener('input', updatePlaceholder);
-maxIn.addEventListener('input', updatePlaceholder);
+minIn.addEventListener("input", updatePlaceholder);
+maxIn.addEventListener("input", updatePlaceholder);
 
 /*.............................................*/
 
@@ -109,100 +108,98 @@ maxIn.addEventListener('input', updatePlaceholder);
 //Display Guess high/low/win
 function displayGuess() {
   event.preventDefault();
-      compareGuess();
-      yourGuess.innerText = guess.value;
-};
+  compareGuess();
+  yourGuess.innerText = guess.value;
+}
 
 //Enter/Return pressed -> display guess
-function enterReturn(event) {
-  if (event.keyCode === 13 && displayLastGuess() == true) {
-    displayGuess();
-  }
-};
+// function enterReturn(event) {
+//   if (event.keyCode === 13 && displayLastGuess() == true) {
+//     displayGuess();
+//   }
+// };
 
 //Enable Clear/Reset Buttons
 function enableButtons() {
   if (guess.value !== "") {
-    for(var i = 0; i < buttons.length; i++){
+    for (var i = 0; i < buttons.length; i++) {
       buttons[i].disabled = false;
     }
-  };
-};
+  }
+}
 
 //Start Next Game After Win
 function startNextGame() {
-    setTimeout(function(){
-      refreshNewGame();
-      maxIn.value = parseInt(maxIn.value) + 10;
-      minIn.value = parseInt(minIn.value) - 10;
-      getRandomIntInclusive();
-      updatePlaceholder();
-      enableCustomGame();
-    }, 2000);
-};
+  setTimeout(function() {
+    refreshNewGame();
+    maxIn.value = parseInt(maxIn.value) + 10;
+    minIn.value = parseInt(minIn.value) - 10;
+    getRandomIntInclusive();
+    updatePlaceholder();
+    enableCustomGame();
+  }, 2000);
+}
 
 //Refresh no reload
 function refreshNewGame() {
   clearMe();
-  yourGuess.innerText = "New Game"
+  yourGuess.innerText = "New Game";
   lastGuess.innerText = "";
-  isItCorrect.innerText = 'Here we go!';
-};
-var mainBody = document.querySelector('main');
-var superGuesser = document.querySelector('.onFire');
+  isItCorrect.innerText = "Here we go!";
+}
+var mainBody = document.querySelector("main");
+var superGuesser = document.querySelector(".onFire");
 
 //Enable Custom Game
 function enableCustomGame() {
-  if (winCount > 2){
+  if (winCount > 2) {
     unhideMinMaxForm();
     superGuesser.classList.add("font-effect-fire-animation");
-    mainBody.classList.add('badass');
-    for(var i = 0; i < winners.length; i++){
+    mainBody.classList.add("badass");
+    for (var i = 0; i < winners.length; i++) {
       winners[i].style.color = "#fff";
     }
-  };
-};
+  }
+}
 
 //Unhide Custom Game
 function unhideMinMaxForm() {
-  minMaxForm.style.display = 'block';
-};
+  minMaxForm.style.display = "block";
+}
 
 //Disable the Clear/Guess Buttons
 function disableClearGuessBtns() {
-  if (guess.value == ""){
+  if (guess.value == "") {
     buttons[0].disabled = true;
     buttons[1].disabled = true;
-  };
-};
+  }
+}
 
 //Clear the Guess Textbox
 //Disable the Clear/Guess Button
 function clearMe() {
   guess.value = "";
   disableClearGuessBtns();
-};
+}
 
 //Reload Page
 function newGame() {
   location.reload();
-};
-
+}
 
 //Play bazinga audio file
 function playAudioWin() {
   bazinga.play();
-};
+}
 
 //Return Random Number Between Min and Max Values
 function getRandomIntInclusive() {
   var max = Math.floor(maxIn.value);
   var min = Math.ceil(minIn.value);
-  answer = Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+  answer = Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
   console.log(answer); //REMOVE
   return answer;
-  
-};
+}
 
 //Compare guess to min max values
 //Prevent Num out of Min/Max Range
@@ -211,74 +208,70 @@ function isOutOfRange() {
   var max = parseInt(maxIn.value);
   var guessNum = parseInt(guess.value);
   if (guessNum < min) {
-    outOfRange.innerText = 'Below Minimun';
+    outOfRange.innerText = "Below Minimun";
     updateGuess.disabled = true;
     return false;
   } else if (guessNum > max) {
-    outOfRange.innerText = 'Above Maximum';
+    outOfRange.innerText = "Above Maximum";
     updateGuess.disabled = true;
     return false;
   } else {
-    outOfRange.innerText = '';
+    outOfRange.innerText = "";
     return true;
-  };
-};
+  }
+}
 
 //Compare guess to answer, print results
 function compareGuess() {
-var guessNum = parseInt(guess.value);
-if (guessNum === answer) {
-  playAudioWin(); //play bazinga audio on win
-  isItCorrect.innerText = 'BOOM!'; //display Boom! on win
-  winCount++;
-  startNextGame();
-} else if (guessNum < answer) { 
-  isItCorrect.innerText = 'That is too low'; //display too low
-  console.log('too low'); //REMOVE
-} else { 
-  isItCorrect.innerText = 'That is too high'; //display too high
-  console.log('too high?');//REMOVE
-};
-};
+  var guessNum = parseInt(guess.value);
+  if (guessNum === answer) {
+    playAudioWin(); //play bazinga audio on win
+    isItCorrect.innerText = "BOOM!"; //display Boom! on win
+    winCount++;
+    startNextGame();
+  } else if (guessNum < answer) {
+    isItCorrect.innerText = "That is too low"; //display too low
+    console.log("too low"); //REMOVE
+  } else {
+    isItCorrect.innerText = "That is too high"; //display too high
+    console.log("too high?"); //REMOVE
+  }
+}
 
 //Display Last Guess Text
 function displayLastGuess() {
   var min = parseInt(minIn.value);
   var max = parseInt(maxIn.value);
   var guessNum = parseInt(guess.value);
-  if (guessNum > min && guessNum < max){
-    lastGuess.innerText = 'Your last guess was';
+  if (guessNum > min && guessNum < max) {
+    lastGuess.innerText = "Your last guess was";
     return true;
-  };
-};
+  }
+}
 
 //Display "Not a Number" if NaN received
 function NaNFool() {
-  var x = (x) ? x : window.event; //who's daddy do i belong to?
-  var charCode = (x.which) ? x.which : x.keyCode; //is this IE or everyone else?
-  if (charCode > 31 && (charCode < 48 || charCode > 57)) { //plz, no characters but 0-9 (48-57)
+  var x = x ? x : window.event; //who's daddy do i belong to?
+  var charCode = x.which ? x.which : x.keyCode; //is this IE or everyone else?
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    //plz, no characters but 0-9 (48-57)
     outOfRange.innerText = "This is not a number fool!";
   } else {
     outOfRange.innerText = "";
-  };
-};
+  }
+}
 
 //Update the Placeholder InputText to show Min/Max values
 function updatePlaceholder() {
-      guess.placeholder='Guess a number between ' + minIn.value + ' and ' + maxIn.value;
-};
-
-
-
-
-
-
+  guess.placeholder =
+    "Guess a number between " + minIn.value + " and " + maxIn.value;
+}
 
 // //-----------------------------------------------
 // var box = document.querySelector('.box');
 // var text = document.querySelector('.text-input');
 // var changeText = document.querySelector('.change-text');
-    
+
 // changeText.addEventListener('click', function () {
 //   box.innerText = text.value;
 // });
@@ -308,4 +301,3 @@ function updatePlaceholder() {
 //     }
 //   }
 // );
-
