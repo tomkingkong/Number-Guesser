@@ -37,7 +37,7 @@ var isItCorrect = document.getElementById('result');
 var outOfRange = document.getElementById('OOR');
 
 //Declare Range Inputs
-var theRange = document.getElementsByClassName('range');
+var theRange = document.getElementsByClassName('.range');
 
 //Declare Custom Game Button
 var customRangeBtn = document.getElementById('custom');
@@ -45,11 +45,14 @@ var customRangeBtn = document.getElementById('custom');
 //Generate random number
 var answer = getRandomIntInclusive();
 
+//Start off Placeholder text with standard Min/Max
+guess.placeholder='Guess a number between ' + minIn.value + ' and ' + maxIn.value;
 
 /*.............................................*/
 
 
 //  EVENT LISTENERS
+
 //Enable Clear and Reset Buttons if text exists
 guess.addEventListener("input", enableButtons);
 
@@ -83,6 +86,10 @@ guess.addEventListener('keyup', enterReturn);
 //Check if User Input is out of Range of Min/Max
 guess.addEventListener('input', isOutOfRange);
 
+//On input describe placeholder text
+minIn.addEventListener('input', updatePlaceholder);
+maxIn.addEventListener('input', updatePlaceholder);
+
 /*.............................................*/
 
 //  FUNCTIONS
@@ -112,12 +119,12 @@ function enableButtons() {
 
 //Start Next Game After Win
 function startNextGame() {
-  if (isItCorrect.innerText === 'BOOM!') {
     setTimeout(function(){
       clearMe();
-
+      maxIn.value + 10;
+      minIn.value - 10;
+      getRandomIntInclusive();
     }, 2000);
-  };
 };
 
 //Enable Custom Game
@@ -198,8 +205,6 @@ if (guessNum === answer) {
   isItCorrect.innerText = 'That is too high';
   console.log('too high?');
 };
-console.log(guessNum);
-console.log(answer);
 };
 
 //Display Last Guess Text
@@ -225,7 +230,10 @@ function NaNFool() {
   };
 };
 
-
+//Update the Placeholder InputText to show Min/Max values
+function updatePlaceholder() {
+  guess.placeholder='Guess a number between ' + minIn.value + ' and ' + maxIn.value;
+};
 
 
 
