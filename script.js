@@ -147,11 +147,15 @@ function refreshNewGame() {
   lastGuess.innerText = "";
   isItCorrect.innerText = 'Here we go!';
 };
+var mainBody = document.querySelector('main');
+var superGuesser = document.querySelector('.onFire');
 
 //Enable Custom Game
 function enableCustomGame() {
   if (winCount > 2){
     unhideMinMaxForm();
+    superGuesser.classList.add("font-effect-fire-animation");
+    mainBody.classList.add('badass');
   };
 };
 

@@ -63,7 +63,7 @@ h1 {
 }
 
 h2 {
-  color: #E6E7E8;
+  color: #EB008B;
   font-family: 'Open Sans', Helvetica, sans-serif;
   font-weight: lighter;
   font-size: 2.4em;
@@ -171,5 +171,11 @@ input {
 }
 
 span {
-  color: #EB008B;
+  color: #E6E7E8;
+}
+
+.badass {
+  background-image: url(https://m.popkey.co/bffa21/RZ7zk.gif);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
